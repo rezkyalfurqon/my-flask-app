@@ -29,6 +29,7 @@ app = Flask('app')
 
 @app.route("/train/naive-bayes")
 def train_nb():
+    X_train, X_test, y_train, y_test = training()
     result = run_model(X_train, X_test, y_train, y_test)
     return "Already Trained using Naive Bayess Algorithm."
 
