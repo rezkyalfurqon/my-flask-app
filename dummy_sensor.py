@@ -1,19 +1,10 @@
-from antares_http import antares
-import sys
 import random
-import time
-
-projectName = 'cobamqtt'
-deviceName = 'coba2'
-
-antares.setDebug(True)
-antares.setAccessKey('2eca1e61d429ec86:8cb1472de9987502')
 
 # min = 1-89
 # max = 90-560
 
 range_set = {
-    'min' : [0, 0],
+    'min' : [1, 89],
     'max' : [90, 561]
 }
 
@@ -25,25 +16,16 @@ def sensor_generator():
     else :
         return range_set['min']
         
-def sendData(realSensor = 0):
+def get_data_dummy(realSensor = 0):
     dataToSend = {}
     for i in range(9):
         key = 'Sensor' + str(int(i+1))
         ranges = sensor_generator()
         dataToSend[key] = random.randint(ranges[0], ranges[1])
-        # dataToSend = {
-        #     key : random.randint(ranges[0], ranges[1])
-        # }
 
     dataToSend['Sensor10'] = float(realSensor)
-    antares.send(dataToSend, projectName, deviceName)
 
-    return dataToSend
-
-# while True:
-#     sendData()
-#     time.sleep(1)
-    
+    return dataToSend 
 
 
 # Get latest data
