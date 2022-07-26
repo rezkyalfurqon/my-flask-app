@@ -62,6 +62,6 @@ def training():
     smote = SMOTE()
     X_train_smote, y_train_smote = smote.fit_resample(X,y)
     # Pisahkan atribut untuk training & test
-    X_train, X_test, y_train, y_test = train_test_split(X_train_smote, y_train_smote, test_size = 0.3, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X_train_smote, y_train_smote, test_size = 0.01, random_state = 0)
 
     return [X_train, X_test, y_train, y_test]
