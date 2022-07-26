@@ -86,7 +86,7 @@ def get_db():
 
     return res
 
-app.route('/create_table_db', methods=['GET'])
+@app.route('/create_table_db', methods=['GET'])
 def create_table_db():
     create_table()
 
