@@ -16,11 +16,23 @@ antares.setAccessKey('2eca1e61d429ec86:8cb1472de9987502')
 
 app = Flask('app')
 
+# global variable
+X_train = 0
+X_test = 0
+y_train = 0
+y_test = 0
+
 @app.route("/")
 def root():
     return "<p>Hello, World!</p>"
 
-# route to training dataset
+@app.route('get_dataset', methods=['GET'])
+def get_dataset():
+    X_train, X_test, y_train, y_test = training()
+
+    return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
+
+# route to run model machine learning
 @app.route("/train/naive-bayes")
 def train_nb():
     result = run_model(X_train, X_test, y_train, y_test)
@@ -72,6 +84,3 @@ def get_db():
 
     return res
 
-if __name__ == "__main__":
-    X_train, X_test, y_train, y_test = training()
-    app.run(host="0.0.0.0", port=9000, use_reloader=True)
