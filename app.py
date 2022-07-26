@@ -14,7 +14,7 @@ deviceName = 'coba2'
 antares.setDebug(True)
 antares.setAccessKey('2eca1e61d429ec86:8cb1472de9987502')
 
-app = Flask('app')
+app = Flask(__name__)
 
 # global variable
 X_train = 0
@@ -26,7 +26,7 @@ y_test = 0
 def root():
     return "<p>Hello, World!</p>"
 
-@app.route('get_dataset', methods=['GET'])
+@app.route('/get_dataset', methods=['GET'])
 def get_dataset():
     X_train, X_test, y_train, y_test = training()
 
