@@ -1,3 +1,4 @@
+from crypt import methods
 import json
 from flask import Flask, request
 from antares_http import antares
@@ -7,6 +8,7 @@ from machine_learning.training import training
 from machine_learning.model import run_model, predict
 from dummy_sensor import get_data_dummy   
 from database.crud import get_data, add_data
+from database.model import create_table
 
 projectName = 'cobamqtt'
 deviceName = 'coba2'
@@ -83,4 +85,10 @@ def get_db():
     res = get_data()
 
     return res
+
+app.route('/create_table_db', methods=['GET'])
+def create_table_db():
+    create_table()
+
+    return "table created"
 

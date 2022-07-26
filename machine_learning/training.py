@@ -64,14 +64,4 @@ def training():
     # Pisahkan atribut untuk training & test
     X_train, X_test, y_train, y_test = train_test_split(X_train_smote, y_train_smote, test_size = 0.3, random_state = 0)
 
-
-    # from imblearn.over_sampling import SMOTE
-    # smote = SMOTE()
-    # X_train_smote, y_train_smote = smote.fit_resample(X_train.astype('float'),y_train)
-
-    # model.fit(X_train_smote,y_train_smote)
-    # y_predict = model.predict(X_train_smote)
-    # # print(accuracy_score(y_train_smote,y_predict))
-    # pd.crosstab(y_train_smote,y_predict)
-
     return [X_train, X_test, y_train, y_test]

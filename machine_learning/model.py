@@ -1,5 +1,4 @@
 from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import accuracy_score
 
 from pickle4 import pickle
 filename = 'models/GaussianNB.sav'
