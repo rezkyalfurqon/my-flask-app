@@ -30,9 +30,13 @@ def root():
 
 @app.route('/get_dataset', methods=['GET'])
 def get_dataset():
-    X_train, X_test, y_train, y_test = training()
+    try:
+        X_train, X_test, y_train, y_test = training()
+        
+        return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
+    except:
+        return {"message": "Failed"}
 
-    return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
 
 # route to run model machine learning
 @app.route("/train/naive-bayes")
