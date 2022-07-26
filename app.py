@@ -41,8 +41,11 @@ def root():
 # route to run model machine learning
 @app.route("/train/naive-bayes")
 def train_nb():
-    result = run_model(X_train, X_test, y_train, y_test)
-    return "Already Trained using Naive Bayess Algorithm."
+    try: 
+        result = run_model(X_train, X_test, y_train, y_test)
+        return "Already Trained using Naive Bayess Algorithm."
+    except:
+        return "Failed"
 
 # route to get latest data from antares
 @app.route("/get_antares")
