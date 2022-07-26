@@ -28,14 +28,14 @@ y_test = 0
 def root():
     return "<p>Hello, World!</p>"
 
-@app.route('/get_dataset', methods=['GET'])
-def get_dataset():
-    try:
-        X_train, X_test, y_train, y_test = training()
-        
-        return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
-    except:
-        return {"message": "Failed"}
+# @app.route('/get_dataset', methods=['GET'])
+# def get_dataset():
+#     try:
+#         X_train, X_test, y_train, y_test = training()
+
+#         return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
+#     except:
+#         return {"message": "Failed"}
 
 
 # route to run model machine learning
@@ -96,3 +96,6 @@ def create_table_db():
 
     return "table created"
 
+if __name__ == "__main__":
+    X_train, X_test, y_train, y_test = training()
+    app.run(host="0.0.0.0", port=5000, debug=True)
