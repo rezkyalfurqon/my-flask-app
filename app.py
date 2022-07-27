@@ -41,9 +41,12 @@ def get_dataset():
 
 # route to run model machine learning
 @app.route("/train/naive-bayes")
-def train_nb():
-    run_model(X_train, X_test, y_train, y_test)
-    return "Already Trained using Naive Bayess Algorithm."
+async def train_nb():
+    try: 
+        await run_model(X_train, X_test, y_train, y_test)
+        return 'train model completed'
+    except:
+        return 'train model failed'
 
 # route to get latest data from antares
 @app.route("/get_antares")
