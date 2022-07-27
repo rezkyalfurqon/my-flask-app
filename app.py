@@ -28,24 +28,22 @@ y_test = 0
 def root():
     return "<p>Hello, World!</p>"
 
-# @app.route('/get_dataset', methods=['GET'])
-# def get_dataset():
-#     try:
-#         X_train, X_test, y_train, y_test = training()
+@app.route('/get_dataset', methods=['GET'])
+def get_dataset():
+    try:
+        X_train, X_test, y_train, y_test = training()
 
-#         return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
-#     except:
-#         return {"message": "Failed"}
+        # return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
+        return "success"
+    except:
+        return "Failed"
 
 
 # route to run model machine learning
 @app.route("/train/naive-bayes")
 def train_nb():
-    try: 
-        result = run_model(X_train, X_test, y_train, y_test)
-        return "Already Trained using Naive Bayess Algorithm."
-    except:
-        return "Failed"
+    run_model(X_train, X_test, y_train, y_test)
+    return "Already Trained using Naive Bayess Algorithm."
 
 # route to get latest data from antares
 @app.route("/get_antares")
@@ -56,35 +54,35 @@ def get_updates():
 
 # route to subscribe service antares
 @app.route('/monitor', methods=['POST'])
-def monitor():
-    response = json.loads(request.data)
-    # result = response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
-    result = response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']    
-    res = json.loads(result)
+async def monitor():
+    try:
+        response = await json.loads(request.data)
+        # result = response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
+        result = await response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
+        res = await json.loads(result)
 
-    sensor10 = res['Sensor10']
+        sensor10 = res['Sensor10']
+        allData = await get_data_dummy(sensor10)
 
-    allData = get_data_dummy(sensor10)
-
-    arrForPredict = []
-    for data in allData:
-        level = 0
-        if allData[data] > 0 and allData[data] < 90:
-            level = 1
-        elif allData[data] >= 90 :
-            level = 2
-        
-        allData[data] = level
-        arrForPredict.append(level)
-
-    hasil = int(predict(arrForPredict))
-
-    allData['kondisi'] = hasil
-
-    add_data(allData)
+        arrForPredict = []
+        for data in allData:
+            level = 0
+            if allData[data] > 0 and allData[data] < 90:
+                level = 1
+            elif allData[data] >= 90 :
+                level = 2
+            
+            allData[data] = level
+            arrForPredict.append(level)
 
 
-    return 'ack'
+        hasil = await int(predict(arrForPredict))
+
+        allData['kondisi'] = hasil
+
+        await add_data(allData)
+    finally:
+        return 'ack'
 
 # route to get all data from sqlite
 @app.route('/get_db', methods=['GET'])
@@ -100,5 +98,5 @@ def create_table_db():
     return "table created"
 
 if __name__ == "__main__":
-    X_train, X_test, y_train, y_test = training()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # X_train, X_test, y_train, y_test = training()
+    app.run(host="0.0.0.0", port=8000, debug=True)
