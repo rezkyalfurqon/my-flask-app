@@ -19,34 +19,32 @@ antares.setAccessKey('2eca1e61d429ec86:8cb1472de9987502')
 app = Flask(__name__)
 
 # global variable
-X_train = 0
-X_test = 0
-y_train = 0
-y_test = 0
+# X_train = 0
+# X_test = 0
+# y_train = 0
+# y_test = 0
 
 @app.route("/")
 def root():
     return "<p>Hello, World!</p>"
 
-@app.route('/get_dataset', methods=['GET'])
-def get_dataset():
-    try:
-        X_train, X_test, y_train, y_test = training()
+# @app.route('/get_dataset', methods=['GET'])
+# def get_dataset():
+#     try:
+#         X_train, X_test, y_train, y_test = training()
 
-        # return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
-        return "success"
-    except:
-        return "Failed"
+#         # return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
+#         return "success"
+#     except:
+#         return "Failed"
 
 
 # route to run model machine learning
 @app.route("/train/naive-bayes")
-async def train_nb():
-    try: 
-        await run_model(X_train, X_test, y_train, y_test)
-        return 'train model completed'
-    except:
-        return 'train model failed'
+def train_nb():
+
+    run_model(X_train, X_test, y_train, y_test)
+    return "Already Trained using Naive Bayess Algorithm."
 
 # route to get latest data from antares
 @app.route("/get_antares")
@@ -101,5 +99,5 @@ def create_table_db():
     return "table created"
 
 if __name__ == "__main__":
-    # X_train, X_test, y_train, y_test = training()
+    X_train, X_test, y_train, y_test = training()
     app.run(host="0.0.0.0", port=8000, debug=True)
