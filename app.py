@@ -1,5 +1,6 @@
 from crypt import methods
 import json
+from urllib import response
 from flask import Flask, request
 from antares_http import antares
 
@@ -19,30 +20,33 @@ antares.setAccessKey('2eca1e61d429ec86:8cb1472de9987502')
 app = Flask(__name__)
 
 # global variable
-# X_train = 0
-# X_test = 0
-# y_train = 0
-# y_test = 0
+X_train = 0
+X_test = 0
+y_train = 0
+y_test = 0
 
 @app.route("/")
 def root():
     return "<p>Hello, World!</p>"
 
 # @app.route('/get_dataset', methods=['GET'])
-# def get_dataset():
-#     try:
-#         X_train, X_test, y_train, y_test = training()
+# async def get_dataset():
+#         response = atraining()
+#         # print(response)
+#         # X_train, X_test, y_train, y_test = training()
 
 #         # return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
+#         X_train = await response['X_train']
+#         X_test = await response['X_test']
+#         y_train = await response['y_train']
+#         y_test = await response['y_test']
 #         return "success"
-#     except:
-#         return "Failed"
 
 
 # route to run model machine learning
 @app.route("/train/naive-bayes")
 def train_nb():
-
+    
     run_model(X_train, X_test, y_train, y_test)
     return "Already Trained using Naive Bayess Algorithm."
 
