@@ -1,6 +1,4 @@
-from crypt import methods
 import json
-from urllib import response
 from flask import Flask, request
 from antares_http import antares
 
@@ -29,20 +27,6 @@ y_test = 0
 def root():
     return "<p>Hello, World!</p>"
 
-# @app.route('/get_dataset', methods=['GET'])
-# async def get_dataset():
-#         response = atraining()
-#         # print(response)
-#         # X_train, X_test, y_train, y_test = training()
-
-#         # return {"message": "Already get data to training","data": {"x_train": X_train, "x_test": X_test, "y_train": y_train, "y_test": y_test}}
-#         X_train = await response['X_train']
-#         X_test = await response['X_test']
-#         y_train = await response['y_train']
-#         y_test = await response['y_test']
-#         return "success"
-
-
 # route to run model machine learning
 @app.route("/train/naive-bayes")
 def train_nb():
@@ -61,13 +45,13 @@ def get_updates():
 @app.route('/monitor', methods=['POST'])
 async def monitor():
     try:
-        response = await json.loads(request.data)
+        response = json.loads(request.data)
         # result = response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
-        result = await response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
-        res = await json.loads(result)
+        result = response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
+        res = json.loads(result)
 
         sensor10 = res['Sensor10']
-        allData = await get_data_dummy(sensor10)
+        allData = get_data_dummy(sensor10)
 
         arrForPredict = []
         for data in allData:
@@ -81,11 +65,13 @@ async def monitor():
             arrForPredict.append(level)
 
 
-        hasil = await int(predict(arrForPredict))
+        hasil = int(predict(arrForPredict))
 
         allData['kondisi'] = hasil
 
-        await add_data(allData)
+        antares.send(allData, projectName, deviceName)
+
+        add_data(allData)
     finally:
         return 'ack'
 
