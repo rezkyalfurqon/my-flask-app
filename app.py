@@ -4,10 +4,9 @@ from antares_http import antares
 
 # my module
 from machine_learning.training import training
-from machine_learning.model import run_model, predict
+from machine_learning.model import model_nb, model_rf, model_svm, predict
 from dummy_sensor import get_data_dummy   
 from database.crud import get_data, add_data
-from database.model import create_table
 
 projectName = 'cobamqtt'
 deviceName = 'coba2'
@@ -28,10 +27,12 @@ def root():
     return "<p>Hello, World!</p>"
 
 # route to run model machine learning
-@app.route("/train/naive-bayes")
+@app.route("/train")
 def train_nb():
     
-    run_model(X_train, X_test, y_train, y_test)
+    model_nb(X_train, X_test, y_train, y_test)
+    model_rf(X_train, X_test, y_train, y_test)
+    model_svm(X_train, X_test, y_train, y_test)
     return "Already Trained using Naive Bayess Algorithm."
 
 # route to get latest data from antares
@@ -65,9 +66,13 @@ async def monitor():
             arrForPredict.append(level)
 
 
-        hasil = int(predict(arrForPredict))
+        hasil_nb = int(predict(arrForPredict, 'nb'))
+        hasil_rf = int(predict(arrForPredict, 'rf'))
+        hasil_svm = int(predict(arrForPredict, 'svm'))
 
-        allData['kondisi'] = hasil
+        allData['kondisi_nb'] = hasil_nb
+        allData['kondisi_rf'] = hasil_rf
+        allData['kondisi_svm'] = hasil_svm
 
         antares.send(allData, projectName, deviceName)
 
@@ -81,12 +86,6 @@ def get_db():
     res = get_data()
 
     return res
-
-@app.route('/create_table_db', methods=['GET'])
-def create_table_db():
-    create_table()
-
-    return "table created"
 
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = training()
