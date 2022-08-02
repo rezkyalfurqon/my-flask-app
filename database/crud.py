@@ -26,7 +26,7 @@ def get_data():
 
         response.append(res)
     
-    return {'data': response}
+    return {'data': response[0]}
 
 
 def add_data(data):

@@ -87,7 +87,7 @@ async def monitor():
 def get_db():
     res = get_data()
 
-    return res[0]
+    return res
 
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = training()
