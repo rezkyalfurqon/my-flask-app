@@ -1,5 +1,6 @@
 import json
 from flask import Flask, request
+from flask_cors import CORS
 from antares_http import antares
 
 # my module
@@ -15,6 +16,7 @@ antares.setDebug(True)
 antares.setAccessKey('2eca1e61d429ec86:8cb1472de9987502')
 
 app = Flask(__name__)
+CORS(app)
 
 # global variable
 X_train = 0
