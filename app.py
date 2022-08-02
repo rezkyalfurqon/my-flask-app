@@ -1,5 +1,5 @@
 import json
-import time
+import datetime
 from flask import Flask, request
 from flask_cors import CORS
 from antares_http import antares
@@ -76,7 +76,7 @@ async def monitor():
         allData['kondisi_nb'] = hasil_nb
         allData['kondisi_rf'] = hasil_rf
         allData['kondisi_svm'] = hasil_svm
-        allData['time'] = time.strftime('%H')
+        allData['time'] = str(datetime.datetime.now().strftime("%H"))
 
         antares.send(allData, projectName, deviceName)
 
@@ -91,6 +91,10 @@ def get_db():
     res = get_data()
 
     return res
+
+@app.route('/tes', methods=['GET'])
+def tes():
+    return str(datetime.datetime.now().strftime("%H"))
 
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = training()
