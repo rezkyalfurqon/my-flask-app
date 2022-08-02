@@ -11,7 +11,7 @@ def create_table():
     cur.execute("DROP TABLE IF EXISTS mitigasi")
 
     #Create users table  in db_web database
-    query_sql ='CREATE TABLE "mitigasi" ("UID" INTEGER PRIMARY KEY AUTOINCREMENT, "sensor1" DOUBLE, "sensor2" DOUBLE, "sensor3" DOUBLE, "sensor4" DOUBLE, "sensor5" DOUBLE, "sensor6" DOUBLE, "sensor7" DOUBLE, "sensor8" DOUBLE, "sensor9" DOUBLE, "sensor10" DOUBLE, "kondisi_nb" DOUBLE, "kondisi_rf" DOUBLE, "kondisi_svm" DOUBLE)'
+    query_sql ='CREATE TABLE "mitigasi" ("UID" INTEGER PRIMARY KEY AUTOINCREMENT, "sensor1" DOUBLE, "sensor2" DOUBLE, "sensor3" DOUBLE, "sensor4" DOUBLE, "sensor5" DOUBLE, "sensor6" DOUBLE, "sensor7" DOUBLE, "sensor8" DOUBLE, "sensor9" DOUBLE, "sensor10" DOUBLE, "kondisi_nb" DOUBLE, "kondisi_rf" DOUBLE, "kondisi_svm" DOUBLE, "time" STRING)'
 
     cur.execute(query_sql)
 

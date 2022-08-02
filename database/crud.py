@@ -23,6 +23,7 @@ def get_data():
         res['kondisi_nb'] = d['kondisi_nb']
         res['kondisi_rf'] = d['kondisi_rf']
         res['kondisi_svm'] = d['kondisi_svm']
+        res['time'] = d['time']
 
         response.append(res)
     
@@ -32,7 +33,7 @@ def get_data():
 def add_data(data):
     con = sql.connect('database.db')
     cur = con.cursor()
-    cur.execute("insert into mitigasi(sensor1, sensor2, sensor3, sensor4, sensor5, sensor6, sensor7, sensor8, sensor9, sensor10, kondisi_nb, kondisi_rf, kondisi_svm) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (data['Sensor1'], data['Sensor2'], data['Sensor3'], data['Sensor4'], data['Sensor5'], data['Sensor6'], data['Sensor7'], data['Sensor8'], data['Sensor9'], data['Sensor10'], data['kondisi_nb'], data['kondisi_rf'], data['kondisi_svm']))
+    cur.execute("insert into mitigasi(sensor1, sensor2, sensor3, sensor4, sensor5, sensor6, sensor7, sensor8, sensor9, sensor10, kondisi_nb, kondisi_rf, kondisi_svm, time) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (data['Sensor1'], data['Sensor2'], data['Sensor3'], data['Sensor4'], data['Sensor5'], data['Sensor6'], data['Sensor7'], data['Sensor8'], data['Sensor9'], data['Sensor10'], data['kondisi_nb'], data['kondisi_rf'], data['kondisi_svm'], data['time']))
     con.commit()
 
     return {'message': 'success'}
