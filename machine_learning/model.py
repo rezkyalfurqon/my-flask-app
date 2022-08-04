@@ -3,9 +3,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn import svm
 
 from pickle4 import pickle
-NB_file = 'models/GaussianNB.sav'
-RF_file = 'models/Random-Forest.sav'
-SVM_file = 'models/svm.sav'
+NB_file = 'machine_learning/models/GaussianNB.sav'
+RF_file = 'machine_learning/models/Random-Forest.sav'
+SVM_file = 'machine_learning/models/svm.sav'
 
 def model_nb(X_train, X_test, y_train, y_test):
     # Membuat model Naive Bayes terhadap Training set

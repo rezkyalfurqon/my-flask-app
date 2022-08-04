@@ -1,5 +1,6 @@
 import json
 import datetime
+from multiprocessing import dummy
 from flask import Flask, request
 from flask_cors import CORS
 from antares_http import antares
@@ -9,6 +10,7 @@ from machine_learning.training import training
 from machine_learning.model import model_nb, model_rf, model_svm, predict
 from dummy_sensor import get_data_dummy   
 from database.crud import get_data, add_data
+from firebase import firebase_create
 
 projectName = 'cobamqtt'
 deviceName = 'coba2'
@@ -36,7 +38,7 @@ def train_nb():
     model_nb(X_train, X_test, y_train, y_test)
     model_rf(X_train, X_test, y_train, y_test)
     model_svm(X_train, X_test, y_train, y_test)
-    return "Already Trained using Naive Bayess Algorithm."
+    return "Already Trained All Algorithm."
 
 # route to get latest data from antares
 @app.route("/get_antares")
@@ -50,39 +52,46 @@ def get_updates():
 async def monitor():
     try:
         response = json.loads(request.data)
-        # result = response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
         result = response['m2m:sgn']['m2m:nev']['m2m:rep']['m2m:cin']['con']
         res = json.loads(result)
 
         sensor10 = res['Sensor10']
-        allData = get_data_dummy(sensor10)
+        dummy_data = get_data_dummy(sensor10)
 
-        arrForPredict = []
-        for data in allData:
+        convert_data = []
+        for data in dummy_data:
             level = 0
-            if allData[data] > 0 and allData[data] < 90:
+            if dummy_data[data] > 0 and dummy_data[data] < 90:
                 level = 1
-            elif allData[data] >= 90 :
+            elif dummy_data[data] >= 90 :
                 level = 2
             
-            allData[data] = level
-            arrForPredict.append(level)
+            dummy_data[data] = level
+            convert_data.append(level)
 
 
-        hasil_nb = int(predict(arrForPredict, 'nb'))
-        hasil_rf = int(predict(arrForPredict, 'rf'))
-        hasil_svm = int(predict(arrForPredict, 'svm'))
+        kondisi_nb = int(predict(convert_data, 'nb'))
+        kondisi_rf = int(predict(convert_data, 'rf'))
+        kondisi_svm = int(predict(convert_data, 'svm'))
 
-        allData['kondisi_nb'] = hasil_nb
-        allData['kondisi_rf'] = hasil_rf
-        allData['kondisi_svm'] = hasil_svm
-        allData['time'] = str(datetime.datetime.now().strftime("%H"))
+        local_time = str(datetime.datetime.now().strftime("%H %M %S"))
 
-        antares.send(allData, projectName, deviceName)
+        antares_data = {
+            "dummy_data": dummy_data,
+            "convert_data": convert_data,
+            "status": {
+                "naive_bayes": kondisi_nb,
+                "random_forest": kondisi_rf,
+                "support_vector_machine": kondisi_svm
+            },
+            "time": local_time
+        }
+
+        antares.send(antares_data, projectName, deviceName)
 
 
-        add_data(allData)
     finally:
+        firebase_create(antares_data, 'data')
         return 'ack'
 
 # route to get all data from sqlite
