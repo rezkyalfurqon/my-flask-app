@@ -59,7 +59,9 @@ def get_kondisi(algoritm):
 @app.route('/get_current_algoritm', methods=['GET'])
 def get_current_algoritm():
 
-    return str(db_get('currentAlgoritm'))
+    current_algoritm = db_get('currentAlgoritm')
+
+    return jsonify({"data": current_algoritm, "message": "success"}), 200
 
 @app.route('/set_current_algoritm', methods=['POST'])
 def set_current_algoritm():
