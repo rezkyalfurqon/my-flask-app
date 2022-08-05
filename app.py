@@ -57,9 +57,21 @@ def get_kondisi(algoritm):
     return str(data[algoritm])
 
 @app.route('/get_current_algoritm', methods=['GET'])
-def current_algoritm():
+def get_current_algoritm():
 
     return str(db_get('currentAlgoritm'))
+
+@app.route('/set_current_algoritm', methods=['POST'])
+def set_current_algoritm():
+    data = request.get_json()
+    print(data)
+
+    res = db_create(data['algoritm'], 'currentAlgoritm')
+
+    if res:
+        return jsonify({"message": "succes"}), 200
+    else:
+        return jsonify({"message": "faild"}), 400
 
 @app.route('/register', methods=['POST'])
 def register():

@@ -11,26 +11,27 @@ def db_create(data, path):
     try:
         data_ref.set(data)
 
-        return jsonify({"success": True}), 200
-    except Exception as e:
-        return jsonify({"success": False}), 400
+        return True
+    except:
+        return False
 
 def db_push(data, path):
     data_ref = db.reference(path)
     try:
         data_ref.push(data)
 
-        return jsonify({"success": True}), 200
-    except Exception as e:
-        return jsonify({"success": False}), 400
+        return True
+    except:
+        return False
 
 def db_get(path):
     data_ref = db.reference(path)
 
     try:
         return data_ref.get()
-    except Exception as e:
+    except:
         return False
+        
         
 def firestore_add(col, doc, data):
     ref = firestore.client()
