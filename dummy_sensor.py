@@ -4,8 +4,8 @@ import random
 # max = 90-560
 
 range_set = {
-    'min' : [95, 95],
-    'max' : [95, 300]
+    'min' : [0, 0],
+    'max' : [0, 0]
 }
 
 def sensor_generator():
@@ -23,7 +23,7 @@ def get_data_dummy(realSensor = 0):
         ranges = sensor_generator()
         dataToSend[key] = random.randint(ranges[0], ranges[1])
 
-    dataToSend['Sensor10'] = float(95)
+    dataToSend['Sensor10'] = float(92)
 
     return dataToSend 
 
