@@ -93,6 +93,7 @@ def login():
     res = firestore_get('users', email)
 
     if res and res['password'] == password:
+        del res['password']
         return jsonify({"data": res, "message": 'success'}), 200
 
     else:
