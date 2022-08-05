@@ -4,8 +4,8 @@ import random
 # max = 90-560
 
 range_set = {
-    'min' : [1, 89],
-    'max' : [90, 300]
+    'min' : [95, 95],
+    'max' : [95, 300]
 }
 
 def sensor_generator():
