@@ -172,13 +172,13 @@ async def monitor():
         antares.send(antares_data, projectName, deviceName)
 
         # report
-        db_push({
-            [local_date]: {
-                "svm": hasil_svm,
-                "rf": hasil_rf,
-                "nb": hasil_nb
-            }
-        }, 'report')
+        # db_push({
+        #     [local_date]: {
+        #         "svm": hasil_svm,
+        #         "rf": hasil_rf,
+        #         "nb": hasil_nb
+        #     }
+        # }, 'report')
 
         # lastReport
         db_create({
