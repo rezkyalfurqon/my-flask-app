@@ -59,9 +59,9 @@ def training():
     X = data.iloc[:, 0:10].values  # Independent Feature
     y = data.iloc[:, -1].values    # Dependent Feature
     #memasukan smote pada dataset
-    smote = SMOTE()
-    X_train_smote, y_train_smote = smote.fit_resample(X,y)
+    # smote = SMOTE()
+    # X_train_smote, y_train_smote = smote.fit_resample(X,y)
     # Pisahkan atribut untuk training & test
-    X_train, X_test, y_train, y_test = train_test_split(X_train_smote, y_train_smote, test_size = 0.2, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
     return [X_train, X_test, y_train, y_test]
