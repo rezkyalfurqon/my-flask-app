@@ -24,6 +24,15 @@ def db_push(data, path):
     except:
         return False
 
+def db_push_child(data, path, child):
+    data_ref = db.reference(path)
+    try:
+        data_ref.child(child).push(data)
+
+        return True
+    except:
+        return False
+
 def db_get(path):
     data_ref = db.reference(path)
 

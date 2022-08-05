@@ -8,7 +8,7 @@ from flask_cors import CORS
 from antares_http import antares
 
 # my module
-from firebase import db_create, db_push, db_get, firestore_add, firestore_get
+from firebase import db_create, db_push, db_get, db_push_child, firestore_add, firestore_get
 from machine_learning.training import training
 from machine_learning.model import model_nb, model_rf, model_svm, predict
 from dummy_sensor import get_data_dummy   
@@ -172,13 +172,13 @@ async def monitor():
         antares.send(antares_data, projectName, deviceName)
 
         # report
-        db_push({
-            local_date: {
+        db_push_child({
                 "svm": hasil_svm,
                 "rf": hasil_rf,
-                "nb": hasil_nb
-            }
-        }, 'report')
+                "nb": hasil_nb,
+                "local_time": local_time,
+                "local_date": local_date
+        }, 'report', local_date)
 
         # lastReport
         db_create({
