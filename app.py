@@ -52,9 +52,8 @@ def get_updates():
 def get_kondisi(algoritm):
 
     data = db_get('latestReport')
-    print(algoritm)
 
-    return str(data[algoritm])
+    return jsonify({"data": data[algoritm], "message": "success"}), 200
 
 @app.route('/get_current_algoritm', methods=['GET'])
 def get_current_algoritm():
