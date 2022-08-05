@@ -99,6 +99,21 @@ def login():
     else:
         return jsonify({"data": {}, "message": 'faild'}), 400
 
+@app.route('/get_profile', methods=['POST'])
+def get_profile():
+    data = request.get_json()
+
+    email = data['email']
+
+    res = firestore_get('users', email)
+
+    if res:
+        del res['password']
+        return jsonify({"data": res, "message": 'success'}), 200
+
+    else:
+        return jsonify({"data": {}, "message": 'faild'}), 400
+
 # route to subscribe service antares
 @app.route('/monitor', methods=['POST'])
 async def monitor():
