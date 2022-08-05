@@ -11,6 +11,7 @@ def model_nb(X_train, X_test, y_train, y_test):
     # Membuat model Naive Bayes terhadap Training set
     model = GaussianNB()
     model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
 
     pickle.dump(model, open(NB_file, 'wb'))
 
