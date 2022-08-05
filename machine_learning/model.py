@@ -9,16 +9,16 @@ SVM_file = 'models/svm.sav'
 
 def model_nb(X_train, X_test, y_train, y_test):
     # Membuat model Naive Bayes terhadap Training set
-    model = GaussianNB()
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
+    modelNB = GaussianNB()
+    modelNB.fit(X_train, y_train)
+    # y_pred = model.predict(X_test)
 
-    pickle.dump(model, open(NB_file, 'wb'))
+    pickle.dump(modelNB, open(NB_file, 'wb'))
 
 def model_rf(X_train, X_test, y_train, y_test):
-    model = RandomForestClassifier(n_estimators= 100, random_state=0)
-    model.fit(X_train,y_train)
-    pickle.dump(model, open(RF_file, 'wb'))
+    modelRF = RandomForestClassifier(n_estimators= 100, random_state=0)
+    modelRF.fit(X_train,y_train)
+    pickle.dump(modelRF, open(RF_file, 'wb'))
 
 def model_svm(X_train, X_test, y_train, y_test):
     model = svm.SVC(kernel='rbf', gamma=0.5, C=0.1).fit(X_train, y_train)
