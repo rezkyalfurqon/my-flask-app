@@ -1,11 +1,14 @@
+from crypt import methods
+import email
 import json
 import datetime
-from flask import Flask, request
+from re import A
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from antares_http import antares
-from firebase import firebase_create
 
 # my module
+from firebase import db_create, db_push, db_get, firestore_add, firestore_get
 from machine_learning.training import training
 from machine_learning.model import model_nb, model_rf, model_svm, predict
 from dummy_sensor import get_data_dummy   
@@ -45,6 +48,56 @@ def get_updates():
     
     return result
 
+@app.route('/get_kondisi/<algoritm>', methods=['GET'])
+def get_kondisi(algoritm):
+
+    data = db_get('latestReport')
+    print(algoritm)
+
+    return str(data[algoritm])
+
+@app.route('/get_current_algoritm', methods=['GET'])
+def current_algoritm():
+
+    return str(db_get('currentAlgoritm'))
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+
+    name = data['name']
+    telp = data['telp']
+    email = data['email']
+    password = data['password']
+
+    res = firestore_add('users', email, {
+        "name": name,
+        "email": email,
+        "telp": telp,
+        "password": password
+    })
+
+    if res :
+        return jsonify({"message": "success"}), 201
+    else:
+        return jsonify({"message": "faild"}), 400
+        
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    email = data['email']
+    password = data['password']
+
+    res = firestore_get('users', email)
+
+    if res and res['password'] == password:
+        return jsonify({"data": res, "message": 'success'}), 200
+
+    else:
+        return jsonify({"data": {}, "message": 'faild'}), 400
+
 # route to subscribe service antares
 @app.route('/monitor', methods=['POST'])
 async def monitor():
@@ -75,6 +128,7 @@ async def monitor():
         hasil_svm = int(predict(predict_data, 'svm'))
 
         local_time = str(datetime.datetime.now().strftime("%H:%M:%S"))
+        local_date = str(datetime.datetime.now().strftime("%d %b %Y"))
 
         antares_data = {
             "dummy_data": dummy_data,
@@ -89,15 +143,30 @@ async def monitor():
 
         antares.send(antares_data, projectName, deviceName)
 
+        # report
+        db_push({
+            [local_date]: {
+                "svm": hasil_svm,
+                "rf": hasil_rf,
+                "nb": hasil_nb
+            }
+        }, 'report')
 
-        # add_data(allData)
-        firebase_create(antares_data, 'antares')
-        firebase_create({
-                "naive_bayes": hasil_nb,
-                "random_forest": hasil_rf,
-                "support_vector_machine": hasil_svm,
+        # lastReport
+        db_create({
+                "NB": hasil_nb,
+                "RF": hasil_rf,
+                "SVM": hasil_svm,
+                "local_date": local_date,
                 "local_time": local_time,
-            }, 'status')
+            }, 'latestReport')
+
+        # history
+        if hasil_nb != 0 or hasil_rf != 0 or hasil_svm != 0:
+            db_push({
+                "time": local_time,
+                "date": local_date
+            }, 'history')
     finally:
         return 'ack'
 
