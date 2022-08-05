@@ -5,7 +5,7 @@ import random
 
 range_set = {
     'min' : [0, 0],
-    'max' : [0, 5]
+    'max' : [0, 0]
 }
 
 def sensor_generator():
