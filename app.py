@@ -171,7 +171,7 @@ async def monitor():
         }
 
         antares.send(antares_data, projectName, deviceName)
-        report = convert_data
+        
         report["svm"] = hasil_svm
         report["rf"] = hasil_rf
         report["nb"] = hasil_nb
@@ -191,12 +191,14 @@ async def monitor():
             }, 'latestReport')
 
         # history
+        history = convert_data
+        history["svm"] = hasil_svm
+        history["rf"] = hasil_rf
+        history["nb"] = hasil_nb
+        history["local_time"] = local_time
+        history["local_date"] = local_date
         if hasil_nb == 2 or hasil_rf == 2 or hasil_svm == 2:
-            db_push({
-                "Kondisi" : hasil_nb,
-                "time": local_time,
-                "date": local_date
-            }, 'history')
+            db_push(history, 'history')
     finally:
         return 'ack'
 
