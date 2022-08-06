@@ -13,8 +13,8 @@ from machine_learning.training import training
 from machine_learning.model import model_nb, model_rf, model_svm, predict
 from dummy_sensor import get_data_dummy   
 
-projectName = 'cobamqtt'
-deviceName = 'coba2'
+projectName = 'MitigasiGempa'
+deviceName = 'KondisiAkhir'
 
 antares.setDebug(True)
 antares.setAccessKey('2eca1e61d429ec86:8cb1472de9987502')
