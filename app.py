@@ -28,7 +28,7 @@ X_test = 0
 y_train = 0
 y_test = 0
 
-@app.route("/")
+@app.route("/") 
 def root():
     return "<p>Server is Already Running</p>"
 
@@ -193,6 +193,7 @@ async def monitor():
         # history
         if hasil_nb != 0 or hasil_rf != 0 or hasil_svm != 0:
             db_push({
+                "Kondisi" : hasil_rf,
                 "time": local_time,
                 "date": local_date
             }, 'history')
