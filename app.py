@@ -193,7 +193,7 @@ async def monitor():
         # history
         if hasil_nb == 2 or hasil_rf == 2 or hasil_svm == 2:
             db_push({
-                "Kondisi" : hasil_rf,
+                "Kondisi" : hasil_nb,
                 "time": local_time,
                 "date": local_date
             }, 'history')
