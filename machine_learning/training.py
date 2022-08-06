@@ -48,10 +48,10 @@ def training():
     data.loc[data['Sensor10'] == 'Less', 'Sensor10'] = 1
     data.loc[data['Sensor10'] == 'More', 'Sensor10'] = 2
 
-    data.loc[data['Kondisi'] == 'Vandalisme', 'Kondisi'] = 2
     data.loc[data['Kondisi'] == 'Normal', 'Kondisi'] = 0
     data.loc[data['Kondisi'] == 'GempaTidakMerusak', 'Kondisi'] = 1
-    data.loc[data['Kondisi'] == 'GempaMerusak', 'Kondisi'] = 1
+    data.loc[data['Kondisi'] == 'GempaMerusak', 'Kondisi'] = 2
+    data.loc[data['Kondisi'] == 'Vandalisme', 'Kondisi'] = 3
 
     data = data.apply(pd.to_numeric, errors='coerce')
     data.head(10)
