@@ -172,6 +172,7 @@ async def monitor():
 
         antares.send(antares_data, projectName, deviceName)
         
+        report = {}
         report["svm"] = hasil_svm
         report["rf"] = hasil_rf
         report["nb"] = hasil_nb
