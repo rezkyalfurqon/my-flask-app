@@ -23,7 +23,7 @@ def get_data_dummy(realSensor = 0):
         ranges = sensor_generator()
         dataToSend[key] = random.randint(ranges[0], ranges[1])
 
-    dataToSend['Sensor10'] = float(90)
+    dataToSend['Sensor10'] = float(realSensor)
 
     return dataToSend 
 
