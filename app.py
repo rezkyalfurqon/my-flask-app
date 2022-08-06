@@ -201,4 +201,11 @@ async def monitor():
 
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = training()
+    print(X_train)
+    print("================")
+    print(X_test)
+    print("================")
+    print(y_train)
+    print("================")
+    print(y_test)
     app.run(host="0.0.0.0", port=5000, debug=True)
