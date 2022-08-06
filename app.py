@@ -191,7 +191,7 @@ async def monitor():
             }, 'latestReport')
 
         # history
-        if hasil_nb != 2 or hasil_rf != 2 or hasil_svm != 2:
+        if hasil_nb == 2 or hasil_rf == 2 or hasil_svm == 2:
             db_push({
                 "Kondisi" : hasil_rf,
                 "time": local_time,
