@@ -30,7 +30,7 @@ y_test = 0
 
 @app.route("/")
 def root():
-    return "<p>Hello, World!</p>"
+    return "<p>Server is Already Running</p>"
 
 # route to run model machine learning
 @app.route("/train")
