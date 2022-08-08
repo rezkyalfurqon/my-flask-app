@@ -3,9 +3,21 @@ import random
 # min = 1-89
 # max = 90-560
 
+# range_set = {
+#     'min' : [0, 88],
+#     'max' : [89, 100]
+# }
+
 range_set = {
-    'min' : [0, 88],
-    'max' : [89, 100]
+    1: [3,6],
+    2: [90, 100],
+    3: [90, 100],
+    4: [90, 100],
+    5: [90, 100],
+    6: [90, 100],
+    7: [90, 100],
+    8: [90, 100],
+    9: [90, 100],
 }
 
 def sensor_generator():
@@ -19,8 +31,8 @@ def sensor_generator():
 def get_data_dummy(realSensor = 0):
     dataToSend = {}
     for i in range(9):
-        key = 'Sensor' + str(int(i+1))
-        ranges = sensor_generator()
+        key = 'Sensor' + str(int(i + 1))
+        ranges = range_set[i + 1]
         dataToSend[key] = random.randint(ranges[0], ranges[1])
 
     dataToSend['Sensor10'] = float(realSensor)
