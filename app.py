@@ -172,6 +172,9 @@ async def monitor():
 
         # push data to antares
         antares.send(antares_data, projectName, deviceName)
+
+        # report
+        db_push(convert_data, 'report')
         
         # lastReport
         db_create({
