@@ -145,7 +145,7 @@ async def monitor():
             level = 0
             if dummy_data[data] > 0 and dummy_data[data] < 90:
                 level = 1
-            elif dummy_data[data] >= 90 :
+            elif dummy_data[data] >= 89 :
                 level = 2
             
             convert_data[data] = level
