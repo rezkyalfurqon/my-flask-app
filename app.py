@@ -172,15 +172,15 @@ async def monitor():
 
         antares.send(antares_data, projectName, deviceName)
         
-        report = {}
-        report["svm"] = hasil_svm
-        report["rf"] = hasil_rf
-        report["nb"] = hasil_nb
-        report["local_time"] = local_time
-        report["local_date"] = local_date
+        # report = {}
+        # report["svm"] = hasil_svm
+        # report["rf"] = hasil_rf
+        # report["nb"] = hasil_nb
+        # report["local_time"] = local_time
+        # report["local_date"] = local_date
 
-        # report
-        db_push_child(report, 'report', f'{local_date}/{str(datetime.datetime.now().strftime("%H"))}')
+        # # report
+        # db_push_child(report, 'report', f'{local_date}/{str(datetime.datetime.now().strftime("%H"))}')
 
         # lastReport
         db_create({
