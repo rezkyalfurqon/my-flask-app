@@ -195,30 +195,18 @@ async def monitor():
         history = convert_data
         history["local_time"] = local_time
         history["local_date"] = local_date
-        # history["SVM"] = hasil_svm
-        # history["RF"] = hasil_rf
-        # history["NB"] = hasil_nb
-        # if hasil_nb == 2 or hasil_rf == 2 or hasil_svm == 2:
-        #     db_push(history, 'history')
 
         if hasil_nb == 2:
-            db_push_child(history, 'history', history)
+            db_push_child(history, 'history', 'NB')
         
         if hasil_rf == 2:
-            db_push_child(history, 'history', history)
+            db_push_child(history, 'history', 'RF')
         
         if hasil_svm == 2:
-            db_push_child(history, 'history', history)
+            db_push_child(history, 'history', 'SVM')
     finally:
         return 'ack'
 
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = training()
-    print(X_train)
-    print("================")
-    print(X_test)
-    print("================")
-    print(y_train)
-    print("================")
-    print(y_test)
     app.run(host="0.0.0.0", port=5000, debug=True)
