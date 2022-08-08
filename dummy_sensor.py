@@ -1,13 +1,5 @@
 import random
 
-# min = 1-89
-# max = 90-560
-
-# range_set = {
-#     'min' : [0, 88],
-#     'max' : [89, 100]
-# }
-
 range_set = {
     1: [2,88],
     2: [2,88],
@@ -20,13 +12,6 @@ range_set = {
     9: [0, 0],
 }
 
-def sensor_generator():
-    rand_num = random.randint(1, 101)
-
-    if rand_num <= 2 :
-        return range_set['max']
-    else :
-        return range_set['min']
         
 def get_data_dummy(realSensor = 0):
     dataToSend = {}
