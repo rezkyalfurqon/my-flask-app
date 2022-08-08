@@ -193,13 +193,22 @@ async def monitor():
 
         # history
         history = convert_data
-        history["svm"] = hasil_svm
-        history["rf"] = hasil_rf
-        history["nb"] = hasil_nb
         history["local_time"] = local_time
         history["local_date"] = local_date
-        if hasil_nb == 2 or hasil_rf == 2 or hasil_svm == 2:
-            db_push(history, 'history')
+        # history["SVM"] = hasil_svm
+        # history["RF"] = hasil_rf
+        # history["NB"] = hasil_nb
+        # if hasil_nb == 2 or hasil_rf == 2 or hasil_svm == 2:
+        #     db_push(history, 'history')
+
+        if hasil_nb == 2:
+            db_push_child(history, history, 'NB')
+        
+        if hasil_rf == 2:
+            db_push_child(history, history, 'RF')
+        
+        if hasil_svm == 2:
+            db_push_child(history, history, 'SVM')
     finally:
         return 'ack'
 
