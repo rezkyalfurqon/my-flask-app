@@ -5,13 +5,13 @@ import random
 
 range_set = {
     'min' : [0, 0],
-    'max' : [0, 0]
+    'max' : [89, 90]
 }
 
 def sensor_generator():
     rand_num = random.randint(1, 101)
 
-    if rand_num <= 3 :
+    if rand_num <= 5 :
         return range_set['max']
     else :
         return range_set['min']
