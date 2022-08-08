@@ -9,7 +9,7 @@ SVM_file = 'models/svm.sav'
 
 def model_nb(X_train, X_test, y_train, y_test):
     # Membuat model Naive Bayes terhadap Training set
-    modelNB = GaussianNB()
+    modelNB = GaussianNB(var_smoothing = 0.1)
     modelNB.fit(X_train, y_train)
     # y_pred = model.predict(X_test)
 
