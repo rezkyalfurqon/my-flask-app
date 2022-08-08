@@ -202,13 +202,13 @@ async def monitor():
         #     db_push(history, 'history')
 
         if hasil_nb == 2:
-            db_push_child(history, history, 'NB')
+            db_push_child(history, 'history', 'NB')
         
         if hasil_rf == 2:
-            db_push_child(history, history, 'RF')
+            db_push_child(history, 'history', 'RF')
         
         if hasil_svm == 2:
-            db_push_child(history, history, 'SVM')
+            db_push_child(history, 'history', 'SVM')
     finally:
         return 'ack'
 
