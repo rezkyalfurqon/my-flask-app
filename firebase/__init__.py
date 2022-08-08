@@ -4,7 +4,7 @@ from firebase_admin import credentials
 from flask import jsonify
 
 cred = credentials.Certificate("firebase/firebase-key.json")
-initialize_app(cred, {'databaseURL': 'https://testing-flask-4d20d-default-rtdb.asia-southeast1.firebasedatabase.app/'})
+initialize_app(cred, {'databaseURL': 'https://mitigasi-gempa-default-rtdb.asia-southeast1.firebasedatabase.app/'})
 
 def db_create(data, path):
     data_ref = db.reference(path)
