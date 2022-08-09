@@ -127,6 +127,12 @@ def get_profile():
     else:
         return jsonify({"data": {}, "message": 'faild'}), 400
 
+@app.route('/clean_report', methods=['GET'])
+def clean_report():
+    db_create('report', {})
+
+    return '<h1>cleaning success</h1>'
+
 # route to subscribe service antares
 @app.route('/monitor', methods=['POST'])
 async def monitor():
