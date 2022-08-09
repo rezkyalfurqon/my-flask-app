@@ -129,7 +129,8 @@ def get_profile():
 
 @app.route('/clean_report', methods=['GET'])
 def clean_report():
-    db_create('report', {})
+    new_data = {}
+    db_create(new_data, 'report')
 
     return '<h1>cleaning success</h1>'
 
